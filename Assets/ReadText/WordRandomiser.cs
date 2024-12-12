@@ -18,7 +18,6 @@ public class WordRandomiser : MonoBehaviour
     private void Init()
     {
         var x = Regex.Split(textFile.text, ((char)10).ToString());
-        print (x.Length);
         _words = x;
     }
     public string GetRandomWord()

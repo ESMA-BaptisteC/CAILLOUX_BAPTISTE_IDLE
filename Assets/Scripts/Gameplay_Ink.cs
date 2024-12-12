@@ -19,12 +19,9 @@ public class Gameplay_Ink : MonoBehaviour
     [SerializeField]
     private Image _inkGauge;
 
-    [SerializeField]
-    private float _inkMax;
     public float _inkCurrent;
 
-    [SerializeField]
-    private float _inkRechargeRate, _inkRechargeValue;
+    public float inkRechargeRate, inkRechargeValue, inkMax = 20;
 
     ////////////////////////////////////////////////////////////////////////////////////
 
@@ -32,13 +29,13 @@ public class Gameplay_Ink : MonoBehaviour
     {
         StartCoroutine(InkRecharge());
 
-        _inkCurrent = _inkMax;
+        _inkCurrent = inkMax;
     }
 
     void Update()
     {
-        _inkGauge.fillAmount = _inkCurrent/_inkMax;
-        _textInkValue.text = _inkCurrent.ToString() + "/" + _inkMax.ToString();
+        _inkGauge.fillAmount = _inkCurrent/inkMax;
+        _textInkValue.text = _inkCurrent.ToString() + "/" + inkMax.ToString();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -47,15 +44,15 @@ public class Gameplay_Ink : MonoBehaviour
     {
         while (true)
         {
-            if (_inkCurrent < _inkMax)
+            if (_inkCurrent < inkMax)
             {
-                yield return new WaitForSeconds(_inkRechargeRate);
+                yield return new WaitForSeconds(inkRechargeRate);
 
-                _inkCurrent += _inkRechargeValue;
+                _inkCurrent += inkRechargeValue;
 
-                if (_inkCurrent >= _inkMax)
+                if (_inkCurrent >= inkMax)
                 {
-                    _inkCurrent = _inkMax;
+                    _inkCurrent = inkMax;
                 }
             }
 

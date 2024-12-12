@@ -29,6 +29,7 @@ public class Manager : MonoBehaviour
 
     public Gameplay_Type gameplay_type;
     public Gameplay_Ink gameplay_ink;
+    public Gameplay_Upgrades gameplay_upgrades;
     public WordRandomiser word_randomiser;
 
     ////////////////////////////////////////////////////////////////////////////////////

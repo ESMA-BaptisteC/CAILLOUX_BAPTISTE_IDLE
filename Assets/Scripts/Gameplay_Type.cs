@@ -14,22 +14,19 @@ public class Gameplay_Type : MonoBehaviour
     ////////////////////////////////////////////////////////////////////////////////////
 
     [SerializeField]
-    private TextMeshProUGUI _textDoubleChances, _textMain, _textMoney, _textPageCount,
-        _textUpgradeCostDoubleChances;
+    private TextMeshProUGUI _textDoubleChances, _textMain, _textPageCount;
 
     [SerializeField]
     private int _currentWords, _maxWords, _currentPages, _maxPages, _books;
-    [SerializeField]
-    private int _typeValue = 1, _doubleChances;
-
-    [SerializeField]
-    private float _money, _upgradeCost = 15;
 
     [SerializeField]
     private string _displayText;
 
-    [SerializeField]
+    ////////////////////////////////////////////////////////////////////////////////////
+    
     public bool isAutoTypeOn;
+    public float doubleChances;
+    public int typeValue = 1;
 
     ////////////////////////////////////////////////////////////////////////////////////
 
@@ -43,15 +40,13 @@ public class Gameplay_Type : MonoBehaviour
 
     private void Update()
     {
-        _textDoubleChances.text = "Double chances : " + _doubleChances.ToString() + "%";
-        _textMoney.text = "Money : " + _money.ToString() + "$";
+        _textDoubleChances.text = "Double chances : " + doubleChances.ToString() + "%";
         _textPageCount.text = _currentPages.ToString() + " / " + _maxPages.ToString();
-        _textUpgradeCostDoubleChances.text = _upgradeCost.ToString() + "$";
         _textMain.text = _displayText;
 
-        if (Input.anyKeyDown && !Input.GetMouseButtonDown(0) && Manager.Instance.gameplay_ink._inkCurrent >= _typeValue)
+        if (Input.anyKeyDown && !Input.GetMouseButtonDown(0) && Manager.Instance.gameplay_ink._inkCurrent >= typeValue)
         {
-            Type(_typeValue);
+            Type(typeValue);
         }
 
         if (_currentWords >= _maxWords)
@@ -71,7 +66,13 @@ public class Gameplay_Type : MonoBehaviour
     {
         Manager.Instance.gameplay_ink._inkCurrent -= value;
         _currentWords += value;
-        _displayText += Manager.Instance.word_randomiser.GetRandomWord() + " ";
+
+        for (var i = 0; i < value; i++)
+        {
+            string temp = Manager.Instance.word_randomiser.GetRandomWord();
+            temp = temp.Replace("\r", "");
+            _displayText += temp + " ";
+        }
         DoubleChances(value);
     }
 
@@ -96,27 +97,19 @@ public class Gameplay_Type : MonoBehaviour
 
     ////////////////////////////////////////////////////////////////////////////////////
 
-    public void UpgradeDoubleChances()
-    {
-        if (_money >= _upgradeCost)
-        {
-            _money -= _upgradeCost;
-            _doubleChances++;
-        }
-
-        if (_doubleChances > 100)
-        {
-            _doubleChances = 100;
-        }
-    }
-
     private void DoubleChances(int value)
     {
         int tempValue = Random.Range(0, 100);
-        if (tempValue <= _doubleChances)
+        if (tempValue <= doubleChances)
         {
             _currentWords += value;
-            _displayText += Manager.Instance.word_randomiser.GetRandomWord() + " ";
+
+            for (var i = 0; i < value; i++)
+            {
+                string temp = Manager.Instance.word_randomiser.GetRandomWord();
+                temp = temp.Replace("\r", "");
+                _displayText += temp + " ";
+            }
         }
     }
 
@@ -124,7 +117,7 @@ public class Gameplay_Type : MonoBehaviour
 
     private void NewBook()
     {
-        _money += 100000;
+        Manager.Instance.gameplay_upgrades.money += 100000;
         _books++;
         _currentPages = 0;
         _maxPages = Random.Range(10, 50);
@@ -132,7 +125,7 @@ public class Gameplay_Type : MonoBehaviour
 
     private void NewPage()
     {
-        _money += 10;
+        Manager.Instance.gameplay_upgrades.money += 10;
         _currentPages++;
         _currentWords = 0;
         _maxWords = Random.Range(50, 100);
