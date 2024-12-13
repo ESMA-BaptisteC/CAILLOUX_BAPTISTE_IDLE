@@ -27,15 +27,17 @@ public class Gameplay_Type : MonoBehaviour
     public bool isAutoTypeOn;
     public float doubleChances;
     public int typeValue = 1;
+    public int autoTypeValue = 1;
+    public float autoTypeSpeed = 1;
 
     ////////////////////////////////////////////////////////////////////////////////////
 
     private void Start()
     {
-        _maxWords = Random.Range(50, 100);
+        _maxWords = Random.Range(50, 80);
         _maxPages = Random.Range(10, 50);
 
-        StartCoroutine(AutoType(.5f));
+        StartCoroutine(AutoType());
     }
 
     private void Update()
@@ -76,15 +78,18 @@ public class Gameplay_Type : MonoBehaviour
         DoubleChances(value);
     }
 
-    IEnumerator AutoType(float waitTime)
+    IEnumerator AutoType()
     {
         while (true)
         {
             if (isAutoTypeOn)
             {
-                yield return new WaitForSeconds(waitTime);
+                yield return new WaitForSeconds(autoTypeSpeed);
 
-                Type(1);
+                if (Manager.Instance.gameplay_ink._inkCurrent >= typeValue)
+                {
+                    Type(autoTypeValue);
+                }
             }
 
             yield return new WaitForEndOfFrame();
@@ -128,7 +133,7 @@ public class Gameplay_Type : MonoBehaviour
         Manager.Instance.gameplay_upgrades.money += 10;
         _currentPages++;
         _currentWords = 0;
-        _maxWords = Random.Range(50, 100);
+        _maxWords = Random.Range(50, 80);
         _displayText = string.Empty;
     }
 
