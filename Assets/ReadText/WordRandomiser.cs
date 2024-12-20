@@ -5,23 +5,38 @@ using UnityEngine;
 
 public class WordRandomiser : MonoBehaviour
 {
-    public TextAsset textFile;
+    public List<TextAsset> textFiles;
 
-    public string[] _words;
+    public List<string[]> _words;
 
 
     private void Start()
     {
+        _words = new List<string[]>();
         Init();
     }
 
     private void Init()
     {
-        var x = Regex.Split(textFile.text, ((char)10).ToString());
-        _words = x;
+        _words.Clear();
+        for (int i = 0; i < textFiles.Count; i++)
+        {
+            var temp = new string[] { };
+            var x = Regex.Split(textFiles[i].text, ((char)10).ToString());
+            temp = x;
+            _words.Add(temp);
+        }
     }
     public string GetRandomWord()
     {
-        return _words[Random.Range(0,_words.Length)];
+        var index = Random.Range(0, _words.Count);
+        var indexSquare = Random.Range(0, _words[index].Length);
+        return _words[index][indexSquare];
+    }
+
+    public void AddTextFile(TextAsset textFile)
+    {
+        textFiles.Add(textFile);
+        Init();
     }
 }
