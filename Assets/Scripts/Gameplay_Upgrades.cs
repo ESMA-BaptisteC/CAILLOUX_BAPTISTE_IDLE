@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+///     Formules de scales à revoir     ###
+/// </summary>
+
 public class Gameplay_Upgrades : MonoBehaviour
 {
     ////////////////////////////////////////////////////////////////////////////////////
@@ -22,27 +26,27 @@ public class Gameplay_Upgrades : MonoBehaviour
     
     private void Update()
     {
-        _textMoney.text = "Money : " + money.ToString() + "$";
-        _textCostDC.text = _upgradeCostDC.ToString() + "$";
-        _textCostTV.text = _upgradeCostTV.ToString() + "$";
-        _textCostIRR.text = _upgradeCostIRR.ToString() + "$";
-        _textCostIRV.text = _upgradeCostIRV.ToString() + "$";
-        _textCostIM.text = _upgradeCostIM.ToString() + "$";
-        _textCostATS.text = _upgradeCostATS.ToString() + "$";
-        _textCostATV.text = _upgradeCostATV.ToString() + "$";
+        _textMoney.text = "Money : " + money.ToString("F0") + "$";
+        _textCostDC.text = _upgradeCostDC.ToString("F0") + "$";
+        _textCostTV.text = _upgradeCostTV.ToString("F0") + "$";
+        _textCostIRR.text = _upgradeCostIRR.ToString("F0") + "$";
+        _textCostIRV.text = _upgradeCostIRV.ToString("F0") + "$";
+        _textCostIM.text = _upgradeCostIM.ToString("F0") + "$";
+        _textCostATS.text = _upgradeCostATS.ToString("F0") + "$";
+        _textCostATV.text = _upgradeCostATV.ToString("F0") + "$";
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
     
     public void UpgradeDoubleChances()
     {
-        if (money >= _upgradeCostDC)
+        if (money >= _upgradeCostDC && Manager.Instance.gameplay_type.doubleChances <= 100)
         {
             _upgradeIndexDC++;
             money -= _upgradeCostDC;
             Manager.Instance.gameplay_type.doubleChances++;
         }
-
+        
         if (Manager.Instance.gameplay_type.doubleChances > 100)
         {
             Manager.Instance.gameplay_type.doubleChances = 100;
@@ -56,7 +60,9 @@ public class Gameplay_Upgrades : MonoBehaviour
             _upgradeIndexTV++;
             money -= _upgradeCostTV;
             Manager.Instance.gameplay_type.typeValue++;
-            _upgradeCostTV = (_upgradeCostTV + _upgradeIndexTV) * (Mathf.Pow(_upgradeIndexTV - 1, 1)) / 2;
+            //_upgradeCostTV = (_upgradeCostTV + _upgradeIndexTV) * (Mathf.Pow(_upgradeIndexTV - 1, 1)) / 2;    ###
+
+            _upgradeCostTV += _upgradeCostTV * 0.2f;
 
         }
     }
@@ -67,7 +73,9 @@ public class Gameplay_Upgrades : MonoBehaviour
             _upgradeIndexIRR++;
             money -= _upgradeCostIRR;
             Manager.Instance.gameplay_ink.inkRechargeRate *= 0.9f;
-            _upgradeCostIRR = (_upgradeCostIRR + _upgradeIndexIRR) * (Mathf.Pow(_upgradeIndexIRR - 1, 1)) / 2;
+            //_upgradeCostIRR = (_upgradeCostIRR + _upgradeIndexIRR) * (Mathf.Pow(_upgradeIndexIRR - 1, 1)) / 2;    ###
+
+            _upgradeCostIRR += _upgradeCostIRR * 0.2f;
         }
     }
     public void UpgradeInkRegenValue()
@@ -77,7 +85,9 @@ public class Gameplay_Upgrades : MonoBehaviour
             _upgradeIndexIRV++;
             money -= _upgradeCostIRV;
             Manager.Instance.gameplay_ink.inkRechargeValue++;
-            _upgradeCostIRV = (_upgradeCostIRV + _upgradeIndexIRV) * (Mathf.Pow(_upgradeIndexIRV - 1, 1)) / 2;
+            //_upgradeCostIRV = (_upgradeCostIRV + _upgradeIndexIRV) * (Mathf.Pow(_upgradeIndexIRV - 1, 1)) / 2;    ###
+
+            _upgradeCostIRV += _upgradeCostIRV * 0.2f;
         }
     }
     public void UpgradeInkMax()
@@ -87,7 +97,9 @@ public class Gameplay_Upgrades : MonoBehaviour
             _upgradeIndexIM++;
             money -= _upgradeCostIM;
             Manager.Instance.gameplay_ink.inkMax++;
-            _upgradeCostIM = (_upgradeCostIM + _upgradeIndexIM) * (Mathf.Pow(_upgradeIndexIM - 1, 1)) / 2;
+            //_upgradeCostIM = (_upgradeCostIM + _upgradeIndexIM) * (Mathf.Pow(_upgradeIndexIM - 1, 1)) / 2;    ###
+
+            _upgradeCostIM += _upgradeCostIM * 0.2f;
         }
     }
     public void UpgradeAutoTypeSpeed()
@@ -97,7 +109,9 @@ public class Gameplay_Upgrades : MonoBehaviour
             _upgradeIndexATS++;
             money -= _upgradeCostATS;
             Manager.Instance.gameplay_type.autoTypeSpeed *= 0.9f;
-            _upgradeCostATS = (_upgradeCostATS + _upgradeIndexATS) * (Mathf.Pow(_upgradeIndexATS - 1, 1)) / 2;
+            //_upgradeCostATS = (_upgradeCostATS + _upgradeIndexATS) * (Mathf.Pow(_upgradeIndexATS - 1, 1)) / 2;    ###
+
+            _upgradeCostATS += _upgradeCostATS * 0.2f;
         }
     }
     public void UpgradeAutoTypeValue()
@@ -107,7 +121,9 @@ public class Gameplay_Upgrades : MonoBehaviour
             _upgradeIndexATV++;
             money -= _upgradeCostATV;
             Manager.Instance.gameplay_type.autoTypeValue++;
-            _upgradeCostATV = (_upgradeCostATV + _upgradeIndexATV) * (Mathf.Pow(_upgradeIndexATV - 1, 1)) / 2;
+            //_upgradeCostATV = (_upgradeCostATV + _upgradeIndexATV) * (Mathf.Pow(_upgradeIndexATV - 1, 1)) / 2;    ###
+
+            _upgradeCostATV += _upgradeCostATV * 0.2f;
         }
     }
 

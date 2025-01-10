@@ -34,7 +34,7 @@ public class Gameplay_Type : MonoBehaviour
 
     private void Start()
     {
-        _maxWords = Random.Range(50, 80);
+        _maxWords = Random.Range(50, 65);
         _maxPages = Random.Range(10, 50);
 
         StartCoroutine(AutoType());
@@ -86,7 +86,7 @@ public class Gameplay_Type : MonoBehaviour
             {
                 yield return new WaitForSeconds(autoTypeSpeed);
 
-                if (Manager.Instance.gameplay_ink._inkCurrent >= typeValue)
+                if (Manager.Instance.gameplay_ink._inkCurrent >= autoTypeValue)
                 {
                     Type(autoTypeValue);
                 }
@@ -133,7 +133,7 @@ public class Gameplay_Type : MonoBehaviour
         Manager.Instance.gameplay_upgrades.money += 10;
         _currentPages++;
         _currentWords = 0;
-        _maxWords = Random.Range(50, 80);
+        _maxWords = Random.Range(50, 65);
         _displayText = string.Empty;
     }
 
