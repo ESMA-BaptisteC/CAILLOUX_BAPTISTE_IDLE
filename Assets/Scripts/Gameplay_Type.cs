@@ -100,6 +100,14 @@ public class Gameplay_Type : MonoBehaviour
         isAutoTypeOn = !isAutoTypeOn;
     }
 
+    public void MobileType()
+    {
+        if (Manager.Instance.gameplay_ink._inkCurrent >= typeValue)
+        {
+            Type(typeValue);
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////
 
     private void DoubleChances(int value)
